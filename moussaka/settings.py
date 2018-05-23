@@ -31,8 +31,8 @@ ALLOWED_HOSTS = ["moussaka.app", "35.190.212.116", "127.0.0.1", "127.0.1.1"]
 # Application definition
 
 INSTALLED_APPS = [
-	'polls.apps.PollsConfig',
-	'myrecipes.apps.MyrecipesConfig',
+    'polls',
+    'myrecipes',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
