@@ -1,0 +1,9 @@
+<h1>{{ recipe.title }}</h1>
+
+<ul>
+    {% for rating in recipe.rating_set.all %}
+        <li>{{ rating.user }} -- {{ rating.stars }} star{{ rating.stars|pluralize }} -- {{ rating.date }} -- {{ rating.comment }}</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'myrecipes:detail' recipe.id %}?rate=True">Rate again?</a>
