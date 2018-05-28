@@ -13,8 +13,13 @@ class IndexView(generic.ListView):
     context_object_name = 'latest_recipe_list'
 
     def get_queryset(self):
-        """Return the last five published recipes."""
-        return Recipe.objects.order_by('-pub_date')[:5]
+        """
+        Return the last five published recipes (not including those set to be
+        published in the future).
+        """
+        return Recipe.objects.filter(
+            pub_date__lte=timezone.now()
+        ).order_by('-pub_date')[:5]
 
 
 class DetailView(generic.edit.FormMixin, generic.DetailView):
@@ -26,6 +31,12 @@ class DetailView(generic.edit.FormMixin, generic.DetailView):
         context = super(DetailView, self).get_context_data(**kwargs)
         context['rate'] = self.request.GET.get('rate')
         return context
+
+    def get_queryset(self):
+        """
+        Excludes any recipes that aren't published yet.
+        """
+        return Recipe.objects.filter(pub_date__lte=timezone.now())
 
 
 class ResultsView(generic.DetailView):
