@@ -7,30 +7,32 @@
 </ul>
 
 <h3>Method</h3>
-<ul>
+<ol>
     {% for step in recipe.step_set.all %}
         <li>{{ step.step_text }}</li>
     {% endfor %}
-</ul>
+</ol>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 {% if rate %}
 <div style="background-color: lightgrey;">
 <h3>Rate</h3>
+
 <form action="{% url 'myrecipes:rate' recipe.id %}" method="post">
     {% csrf_token %}
     <table>
     {{ form.as_table }}
     </table>
     <input type="submit" value="Send rating" />
-    <div style="background-color: lightgrey;">
-        <a href="{% url 'myrecipes:detail' recipe.id %}">[Hide form]</a>
-    </div>
+    <a href="{% url 'myrecipes:detail' recipe.id %}">[Hide form]</a>
+    <a href="{% url 'myrecipes:results' recipe.id %}">[See results]</a>
 </form>
 </div>
 {% else %}
     <div style="background-color: lightgrey;">
         <a href="{% url 'myrecipes:detail' recipe.id %}?rate=True">Rate</a>
+        <a href="{% url 'myrecipes:results' recipe.id %}">[See results]</a>
     </div>
 {% endif %}
+<a href="{% url 'myrecipes:index' %}">[Back to list]</a>
